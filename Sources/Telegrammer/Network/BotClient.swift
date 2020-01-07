@@ -18,11 +18,16 @@ public class BotClient {
 
     var client: HTTPClient
     
-    public init(host: String, port: Int, token: String, worker: HTTPClient.EventLoopGroupProvider) throws {
+	public init(host: String,
+				port: Int,
+				token: String,
+				worker: HTTPClient.EventLoopGroupProvider,
+				proxy: HTTPClient.Configuration.Proxy?) throws {
         self.host = host
         self.port = port
         self.token = token
-        self.client = HTTPClient(eventLoopGroupProvider: worker)
+		let configuration = HTTPClient.Configuration(proxy: proxy)
+		self.client = HTTPClient(eventLoopGroupProvider: worker, configuration: configuration)
     }
     
     /// Sends request to api.telegram.org, and receive TelegramContainer object

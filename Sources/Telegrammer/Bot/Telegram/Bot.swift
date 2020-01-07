@@ -25,6 +25,7 @@ public final class Bot: BotProtocol {
         public var serverHost: String = "api.telegram.org"
         public var serverPort: Int = 443
         public var webhooksConfig: Webhooks.Config? = nil
+		public var proxy: Bot.Settings.Proxy? = nil
 
         public init(token: String, debugMode: Bool = true) {
             self.token = token
@@ -53,7 +54,8 @@ public final class Bot: BotProtocol {
             host: settings.serverHost,
             port: settings.serverPort,
             token: settings.token,
-            worker: groupProvider
+            worker: groupProvider,
+			proxy: settings.proxy.map(HTTPClient.Configuration.Proxy.init)
         )
         self.boundary = String.random(ofLength: 20)
     }
